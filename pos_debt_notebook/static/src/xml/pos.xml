@@ -38,7 +38,7 @@
                 </div>
             </div>
         </xpath>
-        <xpath expr="//div[hasclass('payment-screen')]" position="inside">
+        <!-- xpath expr="//div[hasclass('payment-screen')]" position="inside">
             <t t-if="currentOrder &amp;&amp; !currentOrder.has_credit_product()">
                 <ValidationButton
                     status="currentOrder.get_due() ? 'alert' : 'validate'"
@@ -46,7 +46,7 @@
                     t-on-click="click_autopay_validation()"
                 />
             </t>
-        </xpath>
+        </xpath -->
     </t>
     <t
         t-name="ClientListScreen"

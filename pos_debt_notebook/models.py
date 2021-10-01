@@ -207,6 +207,7 @@ class ResPartner(models.Model):
 
     @api.model
     def create_from_ui(self, partner):
+        _logger.debug("Fuck")
         if partner.get("debt_limit") is False:
             del partner["debt_limit"]
         return super(ResPartner, self).create_from_ui(partner)
@@ -642,7 +643,7 @@ class PosOrder(models.Model):
                         "note": product_list,
                     }
                 )
-                payment[2]["amount"] = 0
+                # payment[2]["amount"] = 0
         pos_order["amount_via_discount"] = amount_via_discount
         order_id = super(PosOrder, self)._process_order(order, draft, existing_order)
         for update in credit_updates:
@@ -688,7 +689,7 @@ class PosOrder(models.Model):
                 }
             )
             # since 12.0v methods used api.depends in 11.0 use api.onchange, so we need to update some fields manually
-            line._onchange_amount_line_all()
+            # line._onchange_amount_line_all()
             amount -= price - line.price_subtotal_incl
         # since 12.0v methods used api.depends in 11.0 use api.onchange, so we need to update some fields manually
         self._onchange_amount_all()
@@ -729,7 +730,7 @@ class PosCreditUpdate(models.Model):
     _order = "id desc"
 
     partner_id = fields.Many2one(
-        "res.partner", string="Partner", required=True, track_visibility="always"
+        "res.partner", string="Partner", required=True, tracking=True
     )
     user_id = fields.Many2one(
         "res.users", string="Salesperson", default=lambda s: s.env.user, readonly=True
@@ -747,7 +748,7 @@ class PosCreditUpdate(models.Model):
     )
     balance = fields.Monetary(
         "Balance Update",
-        track_visibility="always",
+        tracking=True,
         help="Change of balance. Negative value for purchases without money (debt). Positive for credit payments (prepament or payments for debts).",
     )
     new_balance = fields.Monetary(
@@ -760,7 +761,7 @@ class PosCreditUpdate(models.Model):
         [("draft", "Draft"), ("confirm", "Confirmed"), ("cancel", "Canceled")],
         default="draft",
         required=True,
-        track_visibility="always",
+        tracking=True,
     )
     update_type = fields.Selection(
         [("balance_update", "Balance Update"), ("new_balance", "New Balance")],

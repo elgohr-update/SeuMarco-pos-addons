@@ -80,7 +80,7 @@ class PosCreditInvoices(models.TransientModel):
         for line in self.line_ids:
             if not line.amount:
                 continue
-            self.env["account.invoice"].create(
+            self.env["account.move"].create(
                 {
                     "partner_id": line.partner_id.id,
                     "invoice_line_ids": [

@@ -488,11 +488,9 @@ odoo.define("pos_debt_notebook.pos", function (require) {
             update_debt_history(partner_ids) {
                 // TODO: зачем это и что оно делает?
                 var client = this.env.pos.get_client();
-                if (client && $.inArray(client.id, partner_ids) !== -1) {
-                    console.log("TODO: something must happen here");
-                    // This.gui.screen_instances.products.actionpad.renderElement();
-                    // this.customer_changed();
-                }
+                console.log(client)
+                console.log(partner_ids)
+                return partner_ids;
             }
 
             async validateOrder(isForceValidate) {
@@ -823,7 +821,7 @@ odoo.define("pos_debt_notebook.pos", function (require) {
                         {price: 0}
                     );
                 }
-
+ 
                 var paymentLines = order.get_paymentlines();
                 if (paymentLines.length) {
                     _.each(paymentLines, function (paymentLine) {
